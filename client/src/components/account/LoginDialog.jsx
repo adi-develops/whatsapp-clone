@@ -1,5 +1,7 @@
+import { useContext } from 'react'
 import { Dialog, Box, Typography, List, ListItem, styled } from "@mui/material";
 import { GoogleLogin } from "@react-oauth/google";
+import { AccountContext } from '../../context/accountprovider';
 import jwt_decode from "jwt-decode"
 
 const dialogStyle = {
@@ -41,8 +43,11 @@ const StyledList = styled(List)`
 
 const LoginDialog = () => {
 
+  const { setAccount } = useContext(AccountContext) ;
+
   function onLoginSuccess(res) {
-    console.log(jwt_decode(res.credential))
+    const decoded = jwt_decode(res.credential) ;
+    setAccount(decoded) ;
   }
   
   function onLoginError(res) {
@@ -50,7 +55,11 @@ const LoginDialog = () => {
   }
 
   return (
-    <Dialog open={true} PaperProps={{ sx: dialogStyle }}>
+    <Dialog 
+      open={true} 
+      PaperProps={{ sx: dialogStyle }}
+      hideBackdrop = {true}
+    >
       <Component>
         <TextContainer>
           <Title>To use Whatsapp on your Computer:</Title>
@@ -60,7 +69,7 @@ const LoginDialog = () => {
           </StyledList>
         </TextContainer>
 
-        <Box sx={{marginLeft: '100px'}}>
+        <Box sx={{position: 'absolute', right: '10%'}}>
         <GoogleLogin
           onSuccess={onLoginSuccess}
           onError={onLoginError}
