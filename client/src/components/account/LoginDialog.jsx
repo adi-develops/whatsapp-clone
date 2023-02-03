@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { Dialog, Box, Typography, List, ListItem, styled } from "@mui/material";
 import { GoogleLogin } from "@react-oauth/google";
-import { AccountContext } from '../../context/accountprovider';
+import { AccountContext } from '../../context/AccountProvider';
 import jwt_decode from "jwt-decode"
 
 const dialogStyle = {

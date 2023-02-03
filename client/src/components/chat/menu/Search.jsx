@@ -13,7 +13,8 @@ const Wrapper = styled(Box)`
     background-color : #f0f2f5 ;
     position : relative ;
     padding : 0 13px ;
-    width : 100% ;
+    width : 90% ;
+    margin-left: 10px;
     border-radius : 10px ;
 ` ;
 
@@ -22,7 +23,7 @@ const Icon = styled(Box)`
     height : 100% ;
     padding : 6px 10px ;
     color : #919191 ;
-
+    
 ` ;
 
 const InputField = styled(InputBase)`
@@ -42,7 +43,7 @@ const Search = () => {
                     <SearchIcon fontSize='small' />
                 </Icon>
                     <InputField 
-                    placeholder= 'search or start a new chat' />
+                    placeholder= 'Search or Start a New Chat' />
             </Wrapper>
         </Component>
     )

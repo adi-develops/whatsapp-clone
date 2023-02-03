@@ -1,8 +1,8 @@
 import { useContext } from 'react' ;
-import { AccountContext } from '../context/accountprovider';
+import { AccountContext } from '../context/AccountProvider';
 import { AppBar, Toolbar, styled, Box } from "@mui/material";
 import LoginDialog from "./account/LoginDialog";
-import ChatDialog from './chat/chatdialog'
+import ChatDialog from './chat/ChatDialog'
 
 const LoginHeader = styled(AppBar)({
     height: "200px",
