@@ -40,7 +40,7 @@ const InfoDrawer = ({open,setOpen}) =>{     //props.open
     return(
         <Drawer 
         open={open}
-        onClose={handleClose}
+        onClose={handleClose}      // When clicked outside
         PaperProps={{sx:drawerStyle}}
         style={{zIndex:1500}}
         >
