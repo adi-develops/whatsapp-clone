@@ -1,5 +1,6 @@
 import { Search as SearchIcon } from '@mui/icons-material'
 import { InputBase, Box, styled } from '@mui/material'
+import { useState } from 'react';
 
 const Component = styled(Box)`
     background : #fff ;
@@ -35,7 +36,7 @@ const InputField = styled(InputBase)`
 ` ;
 
 
-const Search = () => {
+const Search = ({setText}) => {
     return(
         <Component>
             <Wrapper>
@@ -43,7 +44,9 @@ const Search = () => {
                     <SearchIcon fontSize='small' />
                 </Icon>
                     <InputField 
-                    placeholder= 'Search or Start a New Chat' />
+                    placeholder= 'Search or Start a New Chat' 
+                    onChange={(e)=>setText(e.target.value)} 
+                    />
             </Wrapper>
         </Component>
     )

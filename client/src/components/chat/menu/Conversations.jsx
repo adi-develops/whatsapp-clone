@@ -15,7 +15,7 @@ const StyledDivider = styled(Divider)`
     opacity: 0.6;
 `
 
-const Conversations = () => {
+const Conversations = ({ text }) => {
 
     const [users, setUsers] = useState([])
     
@@ -23,6 +23,7 @@ const Conversations = () => {
 
     const fetchData = async () => {
         let response = await getUsers();
+        const filteredData = response.filter(user=>user.name.toLowerCase().includes(text.toLowerCase())) ; ;
         setUsers(response)
     };
 
