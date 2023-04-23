@@ -1,5 +1,4 @@
 import { useContext } from 'react' 
-
 import { Box, Typography, styled } from "@mui/material"
 import { AccountContext } from '../../../context/AccountProvider'
 import { setConversation } from '../../../service/api'
@@ -25,7 +24,7 @@ const Conversation  = ({user}) => {
     }
 
     return (
-        <Component onclick = {()=>getUser()}>
+        <Component onClick = {() => getUser()}>
             <Box>
                 <Image src={user.picture} alt="dp" />
             </Box>

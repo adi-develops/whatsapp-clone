@@ -1,7 +1,5 @@
-import { Box, InputBase, styled } from '@mui/material' 
-import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
-import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
-import MicOutlinedIcon from '@mui/icons-material/MicOutlined';
+import { Box, InputBase, styled } from '@mui/material'
+import { EmojiEmotionsOutlined, AttachFileOutlined, MicOutlined } from '@mui/icons-material';
 
 const Container = styled(Box) `
     height : 55px ;
@@ -30,22 +28,21 @@ const InputField = styled(InputBase) `
     font-size : 14px ;
 ` ;
 
-const ClipIcon = styled(AttachFileOutlinedIcon) `
+const ClipIcon = styled(AttachFileOutlined) `
     transform : rotate(40deg) ;
 ` ;
 
 const Footer = ()=> {
     return (
         <Container>
-            < EmojiEmotionsOutlinedIcon />
+            < EmojiEmotionsOutlined />
             < ClipIcon />
             <Search>
                 <InputField placeholder = "Type a Message"/>
             </Search>
-            < MicOutlinedIcon />
+            < MicOutlined />
         </Container>
     )
 }
-
 
 export default Footer ;

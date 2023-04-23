@@ -21,20 +21,20 @@ const Conversations = ({ text }) => {
     
     const { account } = useContext(AccountContext)
 
-    const fetchData = async () => {
-        let response = await getUsers();
-        const filteredData = response.filter(user=>user.name.toLowerCase().includes(text.toLowerCase())) ; ;
-        setUsers(response)
-    };
-
+    
     useEffect(() => {
+        const fetchData = async () => {
+            let response = await getUsers();
+            const filteredData = response.filter(user => user.name.toLowerCase().includes(text.toLowerCase())) ; ;
+            setUsers(filteredData)
+        };
         fetchData();
-    }, []);
+    }, [text]);
 
     return (
         <Component>
             {
-                users.map(user => (
+                users.map((user) => (
                     user.sub !== account.sub &&
                     <>
                     <Conversation user={user} />
