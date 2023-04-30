@@ -17,10 +17,10 @@ const Image = styled('img')({
 })
 
 const Conversation  = ({user}) => {
-    const { setPerson, account } = useContext(AccountContext) ;
+    const { setPerson, account } = useContext(AccountContext)
     const getUser = async () => {
-        setPerson(user) ;
-        setConversation({senderId : account.sub, recieverId : user.sub}) ;
+        setPerson(user)
+        setConversation({senderId : account.sub, recieverId : user.sub})
     }
 
     return (

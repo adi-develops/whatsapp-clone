@@ -1,6 +1,5 @@
 import { Search as SearchIcon } from '@mui/icons-material'
 import { InputBase, Box, styled } from '@mui/material'
-import { useState } from 'react';
 
 const Component = styled(Box)`
     background : #fff ;

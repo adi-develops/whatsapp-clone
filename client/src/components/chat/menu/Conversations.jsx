@@ -34,10 +34,10 @@ const Conversations = ({ text }) => {
     return (
         <Component>
             {
-                users.map((user) => (
+                users.map((user, index) => (
                     user.sub !== account.sub &&
                     <>
-                    <Conversation user={user} />
+                    <Conversation key={index} user={user} />
                     <StyledDivider />
                     </>
                 ))
