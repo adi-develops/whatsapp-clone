@@ -21,7 +21,9 @@ const Container = styled(Box)`
 const Messages = ({ account, person, conversation }) => {
   const [value, setValue] = useState("");
   const [messages, setMessages] = useState([]);
-  const [newMessageFlag, setNewMessageFlag] = useState(false)
+  const [newMessageFlag, setNewMessageFlag] = useState(false);
+  const [file, setFile] = useState();
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     const getMessageDetails = async () => {
@@ -35,16 +37,29 @@ const Messages = ({ account, person, conversation }) => {
   const sendText = async (event) => {
     const keyCode = event.which || event.keyCode;
     if (keyCode === 13) {
-      let message = {
-        senderId: account.sub,
-        receiverId: person.sub,
-        conversationId: conversation._id,
-        type: "text",
-        text: value,
-      };
+      let message = {};
+      if (!file) {
+        message = {
+          senderId: account.sub,
+          receiverId: person.sub,
+          conversationId: conversation._id,
+          type: "text",
+          text: value,
+        };
+      } else {
+        message = {
+          senderId: account.sub,
+          receiverId: person.sub,
+          conversationId: conversation._id,
+          type: "file",
+          text: image,
+        };
+      }
       await newMessage(message);
       setValue("");
-      setNewMessageFlag(prev => !prev)
+      setFile("");
+      setImage("");
+      setNewMessageFlag((prev) => !prev);
     }
   };
 
@@ -58,7 +73,14 @@ const Messages = ({ account, person, conversation }) => {
             </Container>
           ))}
       </Component>
-      <Footer sendText={sendText} value={value} setValue={setValue} />
+      <Footer
+        sendText={sendText}
+        value={value}
+        setValue={setValue}
+        file={file}
+        setFile={setFile}
+        setImage={setImage}
+      />
     </Wrapper>
   );
 };

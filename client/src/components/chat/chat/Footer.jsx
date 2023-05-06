@@ -4,6 +4,8 @@ import {
   AttachFileOutlined,
   MicOutlined,
 } from "@mui/icons-material";
+import { useEffect } from "react";
+import { uploadFile } from "../../../service/api";
 
 const Container = styled(Box)`
   height: 55px;
@@ -19,7 +21,7 @@ const Container = styled(Box)`
 `;
 
 const MessageBox = styled(Box)`
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 18px;
   width: calc(94% - 100px);
 `;
@@ -36,19 +38,41 @@ const ClipIcon = styled(AttachFileOutlined)`
   transform: rotate(40deg);
 `;
 
-const Footer = ({sendText, value, setValue}) => {
+const Footer = ({ sendText, value, setValue, file, setFile, setImage }) => {
+
+  useEffect(() => {
+    const getImage = async () => {
+      const data = new FormData()
+      data.append("name", file.name)
+      data.append("file", file)
+
+      let response = await uploadFile(data)
+      setImage(response.data)
+    }
+    getImage()
+  }, [file, setImage])
+
+  const onFileChange = (event) => {
+    setFile(event.target.files[0])
+    setValue(event.target.files[0].name)
+  }
 
   return (
     <Container>
       <EmojiEmotionsOutlined />
-      <ClipIcon />
+      <label htmlFor="fileInput">
+        <ClipIcon />
+      </label>
+      <input type="file" id="fileInput" style={{ display: "none" }} onChange={(event) => onFileChange(event)} />
       <MessageBox>
         <InputField
           placeholder="Type a Message"
           onChange={(event) => {
             setValue(event.target.value);
           }}
-          onKeyPress={(event) => {sendText(event)}}
+          onKeyPress={(event) => {
+            sendText(event);
+          }}
           value={value}
         />
       </MessageBox>
