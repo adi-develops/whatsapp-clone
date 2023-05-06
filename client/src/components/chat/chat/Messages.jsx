@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
 import Footer from "./Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getMessages, newMessage } from "../../../service/api";
 import Message from "./Message";
 
@@ -25,14 +25,19 @@ const Messages = ({ account, person, conversation }) => {
   const [file, setFile] = useState();
   const [image, setImage] = useState("");
 
+  const scrollRef = useRef()
+
   useEffect(() => {
     const getMessageDetails = async () => {
       let data = await getMessages(conversation._id);
-      // console.log(data)
       setMessages(data);
     };
     conversation._id && getMessageDetails();
   }, [person._id, conversation._id, newMessageFlag]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ transition: 'smooth' })
+  }, [messages])
 
   const sendText = async (event) => {
     const keyCode = event.which || event.keyCode;
@@ -68,7 +73,7 @@ const Messages = ({ account, person, conversation }) => {
       <Component>
         {messages &&
           messages.map((message) => (
-            <Container>
+            <Container ref={scrollRef}>
               <Message message={message} />
             </Container>
           ))}
