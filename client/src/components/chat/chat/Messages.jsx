@@ -1,8 +1,9 @@
 import { Box, styled } from "@mui/material";
 import Footer from "./Footer";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { getMessages, newMessage } from "../../../service/api";
 import Message from "./Message";
+import { AccountContext } from "../../../context/AccountProvider";
 
 const Wrapper = styled(Box)`
   background-image: url(${"https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png"});
@@ -21,11 +22,22 @@ const Container = styled(Box)`
 const Messages = ({ account, person, conversation }) => {
   const [value, setValue] = useState("");
   const [messages, setMessages] = useState([]);
-  const [newMessageFlag, setNewMessageFlag] = useState(false);
   const [file, setFile] = useState();
   const [image, setImage] = useState("");
+  const [incomingMessage, setIncomingMessage] = useState(null);
 
-  const scrollRef = useRef()
+  const scrollRef = useRef();
+
+  const { socket, newMessageFlag, setNewMessageFlag } = useContext(AccountContext);
+
+  useEffect(() => {
+    socket.current.on("getMessage", (data) => {
+      setIncomingMessage({
+        ...data,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
 
   useEffect(() => {
     const getMessageDetails = async () => {
@@ -36,8 +48,14 @@ const Messages = ({ account, person, conversation }) => {
   }, [person._id, conversation._id, newMessageFlag]);
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ transition: 'smooth' })
-  }, [messages])
+    scrollRef.current?.scrollIntoView({ transition: "smooth" });
+  }, [messages]);
+
+  useEffect(() => {
+    incomingMessage &&
+      conversation?.members?.includes(incomingMessage.senderId) &&
+      setMessages((prev) => [...prev, incomingMessage]);
+  }, [incomingMessage, conversation]);
 
   const sendText = async (event) => {
     const keyCode = event.which || event.keyCode;
@@ -60,7 +78,11 @@ const Messages = ({ account, person, conversation }) => {
           text: image,
         };
       }
+
+      socket.current.emit("sendMessage", message);
+
       await newMessage(message);
+
       setValue("");
       setFile("");
       setImage("");

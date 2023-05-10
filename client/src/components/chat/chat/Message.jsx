@@ -67,7 +67,7 @@ export const Message = ({ message }) => {
 const ImageMessage = ({ message }) => {
   return (
     <Box style={{ position: "relative" }}>
-      {message.text.includes(".pdf") ? (
+      {message?.text?.includes(".pdf") ? (
         <Box style={{ display: "flex" }}>
           <img src={iconPDF} alt="pdf" style={{ width: 80 }} />
           <Typography style={{ fontSize: 14 }}>
